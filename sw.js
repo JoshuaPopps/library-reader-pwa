@@ -2,12 +2,13 @@
  * works offline in the garage. Version the cache name on release.
  * pdf.js is vendored locally (vendor/) and precached with the shell,
  * so rendering and search work with no network at all. */
-var CACHE = 'library-reader-v1';
+var CACHE = 'library-reader-v2';
 var ASSETS = [
   './', './index.html', './styles.css', './app.js', './idb.js',
   './sw-update.js',
   './vendor/pdf.min.js', './vendor/pdf.worker.min.js',
   './manifest.webmanifest',
+  './assets/hero-library-reader.svg',
   './icons/icon-192.png', './icons/icon-512.png'
 ];
 

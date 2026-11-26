@@ -1,0 +1,46 @@
+<!-- Library Reader hero — hand-drawn, word-free. An open manual
+     with a purple bookmark ribbon.
+     Blueprint-sketch style: chrome linework on gloss black, purple
+     accent. Drawn for the app; no stock art, no text. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 240" role="img" aria-label="Open manual line drawing">
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="30%" stop-color="#e3e3ea"/>
+      <stop offset="48%" stop-color="#a8a8b2"/>
+      <stop offset="60%" stop-color="#f4f4f8"/>
+      <stop offset="78%" stop-color="#c6c6cf"/>
+      <stop offset="100%" stop-color="#8e8e99"/>
+    </linearGradient>
+  </defs>
+  <!-- blueprint construction lines -->
+  <line x1="430" y1="18" x2="430" y2="228" stroke="#9d6bff" stroke-width="1" stroke-dasharray="3 6" opacity=".35"/>
+  <circle cx="430" cy="128" r="56" fill="none" stroke="url(#chrome)" stroke-width="1" stroke-dasharray="3 6" opacity=".35"/>
+  <!-- ground line with a purple segment under the book -->
+  <line x1="60" y1="218" x2="800" y2="218" stroke="url(#chrome)" stroke-width="2"/>
+  <line x1="290" y1="218" x2="570" y2="218" stroke="#9d6bff" stroke-width="2"/>
+  <!-- open book: left page, right page, spine -->
+  <path d="M292 62 Q360 46 430 62 L430 196 Q360 180 292 196 Z"
+        fill="#101014" stroke="url(#chrome)" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M568 62 Q500 46 430 62 L430 196 Q500 180 568 196 Z"
+        fill="#101014" stroke="url(#chrome)" stroke-width="3" stroke-linejoin="round"/>
+  <line x1="430" y1="62" x2="430" y2="196" stroke="url(#chrome)" stroke-width="3"/>
+  <!-- text lines, following the page slant -->
+  <g stroke="url(#chrome)" stroke-width="2" opacity=".7">
+    <line x1="312" y1="82" x2="410" y2="70"/>
+    <line x1="312" y1="98" x2="410" y2="86"/>
+    <line x1="312" y1="114" x2="410" y2="102"/>
+    <line x1="312" y1="130" x2="392" y2="120"/>
+    <line x1="312" y1="146" x2="410" y2="134"/>
+    <line x1="450" y1="70" x2="548" y2="82"/>
+    <line x1="450" y1="86" x2="548" y2="98"/>
+    <line x1="450" y1="102" x2="548" y2="114"/>
+    <line x1="468" y1="120" x2="548" y2="130"/>
+    <line x1="450" y1="134" x2="548" y2="146"/>
+  </g>
+  <!-- bookmark ribbon, purple, hanging from the right page -->
+  <path d="M512 56 L528 56 L528 116 L520 106 L512 116 Z" fill="#9d6bff"/>
+  <!-- page corners, slightly turned -->
+  <path d="M292 196 L306 182" stroke="url(#chrome)" stroke-width="2" opacity=".6"/>
+  <path d="M568 196 L554 182" stroke="url(#chrome)" stroke-width="2" opacity=".6"/>
+</svg>
