@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="1990">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Library Reader</title>
+<meta name="description" content="Bring your own manual. Load a PDF from your device, read it page by page, search it, bookmark it — fully offline, nothing uploaded, no account.">
+<meta name="theme-color" content="#070709">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <p class="eyebrow">shop library &mdash; popps&rsquo;s garage</p>
+  <h1>Library Reader</h1>
+  <p class="tagline">Your manuals, on your device. Load a PDF, read it, search it — nothing ever leaves the phone.</p>
+</header>
+
+<main>
+  <!-- LIBRARY -->
+  <section id="view-library" class="view active">
+    <h2>Library</h2>
+    <p class="muted">Your PDFs live on this device only — stored in the browser, never uploaded, never synced anywhere. The app ships with no manuals at all.</p>
+
+    <div id="drop-zone" class="drop-zone">
+      <p><strong>Drop PDF files here</strong></p>
+      <p class="muted">or pick them from your device:</p>
+      <label class="btn-label">Choose PDF files
+        <input type="file" id="pdf-file" accept="application/pdf,.pdf" multiple hidden>
+      </label>
+    </div>
+
+    <form id="rename-form" class="card" style="display:none">
+      <label>Rename book
+        <input type="text" id="rename-title" required>
+      </label>
+      <button type="submit" class="primary">Save name</button>
+      <button type="button" id="rename-cancel" class="secondary">Cancel</button>
+    </form>
+
+    <div id="book-list"></div>
+
+    <div class="card">
+      <h3>Try it out</h3>
+      <p class="muted">Loads a three-page example document the app makes on your device, so you can try the reader, the search, and the bookmarks before loading a real manual. It is not a real manual — it only describes how the reader works.</p>
+      <button id="example-btn" class="secondary">Load example document</button>
+    </div>
+  </section>
+
+  <!-- READER -->
+  <section id="view-reader" class="view">
+    <h2 id="reader-title">Reader</h2>
+    <p id="reader-meta" class="muted">Pick a book from the Library tab.</p>
+    <p id="index-status" class="muted"></p>
+
+    <div class="card reader-controls">
+      <div class="page-row">
+        <button id="page-prev" class="secondary" type="button">&larr; Prev</button>
+        <span id="page-indicator" class="muted"></span>
+        <button id="page-next" class="secondary" type="button">Next &rarr;</button>
+      </div>
+      <form id="page-jump-form" class="page-row">
+        <label>Go to page
+          <input type="number" id="page-jump" inputmode="numeric" min="1" step="1">
+        </label>
+        <button type="submit" class="secondary">Go</button>
+        <label>Zoom
+          <select id="zoom-select">
+            <option value="fit" selected>Fit width</option>
+            <option value="1">100%</option>
+            <option value="1.5">150%</option>
+            <option value="2">200%</option>
+          </select>
+        </label>
+      </form>
+      <button id="bookmark-btn" class="secondary" type="button">Bookmark this page</button>
+    </div>
+
+    <div id="page-wrap" class="page-wrap">
+      <canvas id="page-canvas"></canvas>
+      <div id="page-text-layer" class="textLayer"></div>
+    </div>
+
+    <form id="search-form" class="card">
+      <label>Search this book
+        <input type="text" id="search-input" placeholder="e.g. torque, clutch, stator" autocomplete="off">
+      </label>
+      <p class="muted">Searches the pages indexed so far — indexing runs in the background while you read. Two letters or more.</p>
+    </form>
+    <div id="search-results"></div>
+
+    <form id="note-form" class="card">
+      <h3>Add a note on this page</h3>
+      <label>Note<textarea id="note-text" rows="2" placeholder="e.g. check this before ordering the gasket"></textarea></label>
+      <button type="submit" class="primary">Add note</button>
+    </form>
+  </section>
+
+  <!-- NOTES -->
+  <section id="view-notes" class="view">
+    <h2>Bookmarks &amp; notes</h2>
+    <p class="muted">Everything you marked, grouped by book. Tap “Go to page” to jump straight back to it.</p>
+    <label>Book
+      <select id="notes-filter"></select>
+    </label>
+    <div id="notes-list"></div>
+  </section>
+
+  <!-- DATA -->
+  <section id="view-data" class="view">
+    <h2>Your data</h2>
+    <p class="muted">No account, no server, no sync. Your books live in this browser's storage — the PDFs in IndexedDB, the titles, bookmarks, and notes in local storage. Back them up with Export.</p>
+    <p id="data-counts" class="card"></p>
+    <div class="card">
+      <h3>Export</h3>
+      <p class="muted">The backup is metadata only — book titles, bookmarks, and notes. The PDFs themselves are not in it; load them again on a new device, then import, and the bookmarks find their books again.</p>
+      <button id="export-btn" class="primary">Download JSON backup</button>
+      <button id="copy-export-btn" class="secondary">Copy JSON to clipboard</button>
+    </div>
+    <div class="card">
+      <h3>Import</h3>
+      <p class="muted">Import merges bookmarks and notes into this library. A bookmark or note is applied only when a book with the same title and size is already here; the rest are skipped and named, so you can load those PDFs first and import again. Import never deletes anything and never adds books.</p>
+      <label>From file<input type="file" id="import-file" accept=".json,application/json"></label>
+      <label>Or paste JSON<textarea id="import-text" rows="4"></textarea></label>
+      <button id="import-btn" class="primary">Import backup</button>
+    </div>
+    <div class="card">
+      <h3>Clear the library</h3>
+      <p class="muted">Deletes every book, its PDF, and all bookmarks and notes on this device. The shared bike roster is not touched — this app does not use it.</p>
+      <button id="delete-all-btn" class="danger">Delete everything</button>
+    </div>
+  </section>
+</main>
+
+<nav class="bottomnav" aria-label="Sections">
+  <button class="navbtn active" data-view="library">Library</button>
+  <button class="navbtn" data-view="reader">Reader</button>
+  <button class="navbtn" data-view="notes">Notes</button>
+  <button class="navbtn" data-view="data">Data</button>
+</nav>
+
+<div id="toast" class="toast" role="status"></div>
+<script src="vendor/pdf.min.js"></script>
+<script src="sw-update.js"></script>
+<script src="idb.js"></script>
+<script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () { /* offline use is optional */ });
+    });
+  }
+</script>
+</body>
+</html>
